@@ -38,29 +38,31 @@ public class Pa2U3P5LrApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
+		
 		System.out.println("INNER JOIN");
 		List<Factura> Facturas1 = this.iFacturaService.buscarFacturasInnerJoin();
 		for (Factura factura : Facturas1) {
-			System.out.println(factura);
+			System.out.println(factura.getNumero());
+			for(DetalleFactura d :factura.getDetalleFacturas()) {
+				System.out.println(d.getNombreProducto());
+			}
 		}
 		
-		System.out.println("RIGHT JOIN");
-		List<Factura> Facturas2 = this.iFacturaService.buscarFacturasRightJoin();
+		System.out.println("WHERE JOIN");
+		List<Factura> Facturas2 = this.iFacturaService.buscarFacturasWhereJoin();
 		for (Factura factura : Facturas2) {
 			System.out.println(factura.getNumero());
+			for(DetalleFactura d :factura.getDetalleFacturas()) {
+				System.out.println(d.getNombreProducto());
+			}
 		}
 		
-		System.out.println("LEFT JOIN");
-		List<Factura> Facturas3 = this.iFacturaService.buscarFacturasLeftJoin();
+		System.out.println("FETCH JOIN");
+		List<Factura> Facturas3 = this.iFacturaService.buscarFacturasFetchJoin();
 		for (Factura factura : Facturas3) {
-			System.out.println(factura);
-		}
-		System.out.println("FULL JOIN");
-		List<Factura> Facturas4 = this.iFacturaService.buscarFacturasFullJoin();
-		for (Factura factura : Facturas4) {
-			System.out.println(factura);
-			for(DetalleFactura detalleFactura : factura.getDetalleFacturas()) {
-				System.out.println(detalleFactura);
+			System.out.println(factura.getNumero());
+			for(DetalleFactura d :factura.getDetalleFacturas()) {
+				System.out.println(d.getNombreProducto());
 			}
 		}
 		

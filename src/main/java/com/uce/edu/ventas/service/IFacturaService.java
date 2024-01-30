@@ -17,5 +17,9 @@ public interface IFacturaService {
 	public List<Factura> buscarFacturasLeftJoin();
 	
 	public List<Factura> buscarFacturasFullJoin();
+	
+	public List<Factura> buscarFacturasWhereJoin();
+	
+	public List<Factura> buscarFacturasFetchJoin();
 
 }
