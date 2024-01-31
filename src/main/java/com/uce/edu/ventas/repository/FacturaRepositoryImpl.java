@@ -1,13 +1,16 @@
 package com.uce.edu.ventas.repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.uce.edu.ventas.repository.modelo.Factura;
+import com.uce.edu.ventas.repository.modelo.dto.FacturaDTO;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 @Repository
@@ -108,6 +111,63 @@ public class FacturaRepositoryImpl implements IFacturaRepositoty {
 		//SELECT f from Factura f JOIN FETCH f.detalleFactura d
 		TypedQuery<Factura> myQuery = this.entityManager.createQuery("SELECT f from Factura f JOIN FETCH f.detalleFacturas d", Factura.class);
 		
+		return myQuery.getResultList();
+	}
+
+	@Override
+	public void actualizar(Factura factura) {
+		// TODO Auto-generated method stub
+		this.entityManager.merge(factura);
+		
+		
+	}
+
+	@Override
+	public int actualizarfechas(LocalDateTime fechaNueva, LocalDateTime fechaActual) {
+		// TODO Auto-generated method stub
+		// select * from factura where fecha >= fechaActual
+		//Lista
+		//Recorrer por cada fecha del select la nueva fecha
+		//Actualizar factura
+		// SQL: UPDATE factura set fact_fecha =: fechaNueva WHERE fact fecha >= fechaActual
+		// JPQL: UPDATE Factura f SET f.fecha =: fechaNueva WHERE f.fecha >= :fechaActual
+		Query myQuery = this.entityManager.createQuery("UPDATE Factura f SET f.fecha =: fechaNueva WHERE f.fecha >= :fechaActual");
+		myQuery.setParameter("fechaNueva", fechaNueva);
+		myQuery.setParameter("fechaActual", fechaActual);
+		return myQuery.executeUpdate(); // cantidad de registros actulizados
+		
+	}
+	public Factura buscar(Integer id) {
+		return this.entityManager.find(Factura.class, id);
+	}
+
+	@Override
+	public void eliminar(Integer id) {
+		// TODO Auto-generated method stub
+		 
+		this.entityManager.remove(this.buscar(id));
+		
+	}
+
+	@Override
+	public int eliminarPorNumero(String numero) {
+		// TODO Auto-generated method stub
+		// SQL: DELETE FROM factura WHERE fact_numero = :numero
+		// JPQL: DELETE FROM Factura f WHERE f.numero = :numero
+		Query myQuery = this.entityManager.createQuery("DELETE FROM Factura f WHERE f.numero = :numero");
+		myQuery.setParameter("numero", numero);
+		return myQuery.executeUpdate();
+		
+		
+	}
+
+	@Override
+	public List<FacturaDTO> seleccionarFacturaDTO() {
+		// TODO Auto-generated method stub
+		
+		TypedQuery<FacturaDTO> myQuery = this.entityManager.createQuery
+				("SELECT NEW com.uce.edu.ventas.repository.modelo.dto.FacturaDTO(f.numero,f.fecha) FROM Factura f ", FacturaDTO.class);
+
 		return myQuery.getResultList();
 	}
 
