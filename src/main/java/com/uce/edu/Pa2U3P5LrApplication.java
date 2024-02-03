@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
+import com.uce.edu.ventas.repository.modelo.Cliente;
 import com.uce.edu.ventas.repository.modelo.DetalleFactura;
 import com.uce.edu.ventas.repository.modelo.Factura;
 import com.uce.edu.ventas.repository.modelo.dto.FacturaDTO;
@@ -39,26 +41,20 @@ public class Pa2U3P5LrApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
+		// Taller 29
 		
-		System.out.println("UPDATE");
+		System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
 		
-		int cantidad = this.iFacturaService.actualizarfechas
-		(LocalDateTime.of(2020, 1, 9, 12, 50),LocalDateTime.of(2020, 1, 15, 12, 0));
-		System.out.println("Cantidad de registros actualizados");
-		System.out.println(cantidad);
+		Factura factura = new Factura();
+		factura.setCedula("1723365328");
+		factura.setFecha(LocalDateTime.now());
+		factura.setNumero("001-002");
 		
-		System.out.println("DELET");
-		int cantidad2 = this.iFacturaService.borrarPorNumero("25688");
-		System.out.println("Cantidad de registros eliminados");
-		System.out.println(cantidad2);
+		Cliente cliente = new Cliente();
+		cliente.setApellido("Espinoza");
+		cliente.setNombre("Juan");
 		
-		System.out.println("DTO");
-		
-		List<FacturaDTO> listaDto = this.iFacturaService.buscarFacturaDTO();
-		for(FacturaDTO fDTO : listaDto) {
-			System.out.println(fDTO);
-		}
-		
+		this.iFacturaService.guardar(factura, cliente);
 		
 		
 		
