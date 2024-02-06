@@ -51,10 +51,13 @@ public class Pa2U3P5LrApplication implements CommandLineRunner {
 		factura.setNumero("001-002");
 		
 		Cliente cliente = new Cliente();
-		cliente.setApellido("Espinoza");
+		cliente.setApellido(null);
 		cliente.setNombre("Juan");
 		
-		this.iFacturaService.guardar(factura, cliente);
+		//this.iFacturaService.guardar(factura, cliente);
+		
+		System.out.println("Main : "+TransactionSynchronizationManager.isActualTransactionActive());
+		this.iFacturaService.prueba();
 		
 		
 		
