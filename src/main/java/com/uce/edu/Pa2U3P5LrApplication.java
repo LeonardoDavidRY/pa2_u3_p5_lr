@@ -41,24 +41,12 @@ public class Pa2U3P5LrApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
-		// Taller 29
+		// Taller 31
 		
-		System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
+		//System.out.println("Prueba supports: "+TransactionSynchronizationManager.isActualTransactionActive());
 		
-		Factura factura = new Factura();
-		factura.setCedula("1723365328");
-		factura.setFecha(LocalDateTime.now());
-		factura.setNumero("001-002");
-		
-		Cliente cliente = new Cliente();
-		cliente.setApellido(null);
-		cliente.setNombre("Juan");
-		
-		//this.iFacturaService.guardar(factura, cliente);
-		
-		System.out.println("Main : "+TransactionSynchronizationManager.isActualTransactionActive());
-		this.iFacturaService.prueba();
-		
+		//this.iFacturaService.pruebaSupports();
+		//this.iFacturaService.pruebaNever();
 		
 		
 	}
