@@ -16,9 +16,9 @@ public class ClienteRepositoryImpl implements IClienteRepository {
 	private EntityManager entityManager;
 	
 	@Override
-	@Transactional(value=TxType.MANDATORY)
+	@Transactional(value = TxType.MANDATORY)//Si es Requiared T1
+	//begin
 	public void insertar(Cliente cliente) {
-		// TODO Auto-generated method stub
 		System.out.println("Antes de ejecutar en la base");
 		try {
 		this.entityManager.persist(cliente);
@@ -26,7 +26,6 @@ public class ClienteRepositoryImpl implements IClienteRepository {
 			System.out.println(e.getClass());
 		}
 		System.out.println("Despues de ejecuar en la base");
-	
 	}
 
 }
