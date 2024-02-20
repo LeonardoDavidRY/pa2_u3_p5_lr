@@ -1,5 +1,12 @@
 package com.uce.edu.funcional;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
+
+//import org.springframework.data.jpa.repository.query.EqlParser.String_literalContext;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -134,6 +141,73 @@ public class Main {
       	IPersonaUnaryOperatorFunction<Empleado> unary3 = met::procesar;
       	Empleado empl3 = unary3.aplicar(empleado2);
       	System.out.println(empl3);
+      	
+      	System.out.println("***********Implementación de interfaces mediante librerias JAVA");
+      	
+      	// 1.- Supplier
+      	System.out.println("Supplier JAVA");
+      	Stream <String> lista = Stream.generate(() -> "465465465"+"Pais").limit(20);
+      	lista.forEach(cadena->System.out.println(cadena));
+      	// 2. Consumer
+      	System.out.println("Consumer JAVA");
+      	List<Integer>listaNumeros = Arrays.asList(1,2,3,4,5,6,7,8,9,85,74,67);
+      	
+      	listaNumeros.forEach(numero -> {
+      		System.out.println("Se inserta");
+      		System.out.println(numero);
+      	});
+      	
+      	// 3. Predicate
+      	System.out.println("Predicate JAVA");
+      	Stream<Integer> listafiltrada = listaNumeros.stream().filter(numero->{
+      		return numero>=10;
+      	});
+      	listafiltrada.forEach(numero->System.out.println(numero));
+      	
+      	// 4. Function
+      	System.out.println("Function JAVA");
+		Stream<String> listaCambiada = listaNumeros.stream().map(numero->{
+			numero = numero*100/50;
+			return "Numero: " + numero.toString();
+		});
+		listaCambiada.forEach(cadena -> System.out.println(cadena));
+		
+		
+		Ciudadano ciudadano1 = new Ciudadano();
+		ciudadano1.setNombre("Edlith");
+		ciudadano1.setApellido("Vinueza");
+		ciudadano1.setProvincia("Pichincha");
+		
+		Ciudadano ciudadano2 = new Ciudadano();
+		ciudadano2.setNombre("Daniela");
+		ciudadano2.setApellido("Teran");
+		ciudadano2.setProvincia("Pichincha");
+		
+		Ciudadano ciudadano3 = new Ciudadano();
+		ciudadano3.setNombre("Juan");
+		ciudadano3.setApellido("Ley");
+		ciudadano3.setProvincia("Pichincha");
+		
+		List<Ciudadano> listaCiudadanos = Arrays.asList(ciudadano1,ciudadano2,ciudadano3);
+		Stream<Empleado> listaEmpleado =  listaCiudadanos.stream().map(ciu -> {
+			Empleado e = new Empleado();
+			e.setNombreCompleto(ciu.getNombre()+" "+(ciu.getApellido()));
+			if (ciu.getProvincia().compareTo("Pichincha") == 0) {
+				e.setPais("Ecuador");
+			}
+			return e;
+		});
+		
+		listaEmpleado.forEach(em -> System.out.println(em));
+		
+		// 5. Unary Operator
+		System.out.println("Unary Operator JAVA");
+		Stream<Integer> listaNumeros2 = listaNumeros.stream().map(numero->{
+			numero = numero*100/50;
+			return numero;
+		});
+		listaNumeros2.forEach(numero ->System.out.println(numero));
 	}
+	
 
 }
